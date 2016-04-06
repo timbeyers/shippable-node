@@ -10,6 +10,9 @@ node_js:
 # The path for Xunit to output test reports
 env:
   - XUNIT_FILE=shippable/testresults/result.xml
+  - secure: rhAhX33Sx18MekA8T+b5sG3UtlqvZAeFaOlGQEFmtMioEXAATixk+DeZRFSlhXrDgTN9JDskmLqggbJ3qD3oHglzXDQ4q4olM+ptMtRxBl7Qd28AT31g82v0M/37+BknbphG73MZr4J9GBvv+xK3u23+LuMCJr/OnqYQ5eProddH2lhJuw6Ag7E+aU7ATbd6OP3cOLxRZgRMEy/Ekzp2bffWLl1KMFeO1NMTt0gSOmP/kq+w7qH5ZDHAJM6RWLCiDYDtPeKW+NL+GVrtEzDJPn08QBOUfpqArNltTLLlUW1w67Bf+BRROFx/neUYoZRYwf//g2sEYk7uza7D6P2ffw==
+before_install:
+  - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 install:
   - source ~/.nvm/nvm.sh && nvm install 0.12
