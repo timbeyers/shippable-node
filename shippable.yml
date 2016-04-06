@@ -12,7 +12,6 @@ env:
   global:
     - XUNIT_FILE=shippable/testresults/result.xml
     - SLACK_HOOK_URL=https://hooks.slack.com/services/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
-    - SLACK_CHANNEL=@slackbot  
     - APP_NAME=shippable-heroku-1001   
     - secure: YGvK9DwcKv7vjd9ch5UjA3lV/zy3a3QCqFtWE4xE2TkmAcJOsN3Z4OSv851Nw17F1EZB91DHO6IsJDlXibLJiuaQLXdOYlVYKEGXCpB7oYIqlgJdLMuk9Fzcul/RdFUvF66Ycdu2yQBRmYrAcsuDfQUyX0U1a6dQwWlKUuoFz/c5HDPhqLB1jRtp7Dl9NvtRiO1N1S14vMs0KaGtMSo+RPNoBfwfm23NWNfEpOw6O0ICZwki6TIF4DXnNnK0lB/fARcDt43Iss+xqk3BU3sTDLRw3HoaQAVpTnMcNOjK49tEMLUt6PtbbeStORsBdeNGh5P9LDZtan3d1GTJ5lvvDQ==
 before_install:
