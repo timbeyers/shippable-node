@@ -10,8 +10,9 @@ node_js:
 # The path for Xunit to output test reports
 env:
   - XUNIT_FILE=shippable/testresults/result.xml
-  - secure: HQ4EujWGSD+KtM0+1vEhK3bO4m1swIVnH/dAqgLvZVvi221o226JvIJb90zN9Fcdhnfa6/WRBnsF/kS75nBTrrnaGZA7435mLkwNN+rSQiflUsVDqydJI1FuO/5akcRxPqDC/EWi8HwMf+AFnt8VbMeBv/psfy6icNfsyRAdqcH4kNTejXMeEZejpPxvB0Yjl78pa1Zr0AQo2DI9bTpeCdKPYVKXnraoi58FzUYhZbMXmsl/U3tOPOOxVsIaqWxXo5IlBF34nU8HlEEeq1nfZTw1qAcrFcrBoVM0iYvJgqZmURgKq1Yt62Ej3SaQk16Z+J9F5bs+xA2ikd5TEyR58A==
-
+  global:  
+    - APP_NAME=shippable-heroku-1001   
+    - secure: YGvK9DwcKv7vjd9ch5UjA3lV/zy3a3QCqFtWE4xE2TkmAcJOsN3Z4OSv851Nw17F1EZB91DHO6IsJDlXibLJiuaQLXdOYlVYKEGXCpB7oYIqlgJdLMuk9Fzcul/RdFUvF66Ycdu2yQBRmYrAcsuDfQUyX0U1a6dQwWlKUuoFz/c5HDPhqLB1jRtp7Dl9NvtRiO1N1S14vMs0KaGtMSo+RPNoBfwfm23NWNfEpOw6O0ICZwki6TIF4DXnNnK0lB/fARcDt43Iss+xqk3BU3sTDLRw3HoaQAVpTnMcNOjK49tEMLUt6PtbbeStORsBdeNGh5P9LDZtan3d1GTJ5lvvDQ==
 before_install:
   - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
@@ -40,6 +41,6 @@ after_script:
   - ./node_modules/.bin/istanbul report cobertura --dir  shippable/codecoverage/
 
 after_success:
-- mkdir -p .ssh || test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku  
-- git remote -v | grep ^heroku || heroku git:remote --ssh-git --app shippable-heroku-1001
+  - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f /tmp/ssh/00_sub > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku  
+  - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app shippable-heroku-1001
   - git push https://git.heroku.com/shippable-heroku-1001.git  master
