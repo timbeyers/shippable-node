@@ -40,6 +40,6 @@ after_script:
   - ./node_modules/.bin/istanbul report cobertura --dir  shippable/codecoverage/
 
 after_success:
-- test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku  
+- cd ~ || mkdir -p .ssh || test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku  
 - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app shippable-heroku-1001
   - git push https://git.heroku.com/shippable-heroku-1001.git  master
