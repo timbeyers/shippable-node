@@ -36,4 +36,5 @@ after_script:
   - ./node_modules/.bin/istanbul report cobertura --dir  shippable/codecoverage/
 
 after_success:
+  - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app shippable-heroku-1001
   - git push https://git.heroku.com/shippable-heroku-1001.git  master
