@@ -5,7 +5,7 @@ var express = require("express"),
 var port = process.env.PORT || 3000 ;
 
 app.get("/", function (req, res) {
-  res.send("Hey buddy, this is CI/CD from shippable to Heroku - Again trying from RDP!");
+  res.send("Hey buddy, this is CI/CD from shippable to Heroku - Test01!");
 });
 
 app.listen(port, function () {
