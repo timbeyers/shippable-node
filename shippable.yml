@@ -30,6 +30,6 @@ build:
 #   - node node_modules/slack-shippable/index.js
   on_success:
     - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f /tmp/ssh/00_sub > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku  
-    - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app shippable-heroku-1001
+    - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app manisha-heroku-test
     - git push -f heroku master
 #   - node node_modules/slack-shippable/index.js -s
