@@ -1,8 +1,6 @@
 # Language setting
 language: node_js
 
-build_image: drydock/u12nod:prod
-
 # Version number
 node_js:
   - 0.12
@@ -10,41 +8,28 @@ node_js:
 # The path for Xunit to output test reports
 env:
   global:
-    - XUNIT_FILE=shippable/testresults/result.xml
-    - SLACK_HOOK_URL=https://hooks.slack.com/services/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
-    - APP_NAME=shippable-heroku-1001   
-    - secure: YGvK9DwcKv7vjd9ch5UjA3lV/zy3a3QCqFtWE4xE2TkmAcJOsN3Z4OSv851Nw17F1EZB91DHO6IsJDlXibLJiuaQLXdOYlVYKEGXCpB7oYIqlgJdLMuk9Fzcul/RdFUvF66Ycdu2yQBRmYrAcsuDfQUyX0U1a6dQwWlKUuoFz/c5HDPhqLB1jRtp7Dl9NvtRiO1N1S14vMs0KaGtMSo+RPNoBfwfm23NWNfEpOw6O0ICZwki6TIF4DXnNnK0lB/fARcDt43Iss+xqk3BU3sTDLRw3HoaQAVpTnMcNOjK49tEMLUt6PtbbeStORsBdeNGh5P9LDZtan3d1GTJ5lvvDQ==
-before_install:
-  - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+#    - XUNIT_FILE=shippable/testresults/result.xml
+#    - SLACK_HOOK_URL=https://hooks.slack.com/services/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
+    - APP_NAME=manisha-heroku-test   
+    - secure: mSNaj2B8rhkfe8uAKz2MO/4K3hnsfA+G+Q+wW0bj8iJw5G4rVF8HPD+RgX+bL2wKVZHAgDn6STdUiKPJ6/3Q51EQohCRwwWTftffXO+Y+f7RtT79sMreLZWKFcldhRwMaVGRUrvKr0/gRbOKqQgKistLWjjr6veKTY8OwhacSf8VgDWckWrLC+bPlaKndsHb3MCGU5tyKfbIugfSlVlmKKWepnyT4JE6IgQwZcJr3RoMAw8teW6t+SxhwzO1nBcoW97JAL30pnUpml99GpahWywbLU49+3E2JaEbpnBT5HXOaQLNaDdmd3vjCD3mez9gzgp9SnfZsrsq8m4y1CEd7g==
 
-install:
-  - source ~/.nvm/nvm.sh && nvm install 0.12
-  - node --version
-  - npm install
-#  - . installMongo.sh
-#  - cat /etc/mongod.conf
-#  - sudo mongod --smallfiles &
-#  - sleep 15
-#  - mongo --eval 'db.collection.find()'
-
-# Create directories for test and coverage reports
-before_script:
-  - mkdir -p shippable/testresults
-  - mkdir -p shippable/codecoverage
-
-# Running the tests with grunt
-script:
-  - grunt
-
-# Tell istanbul to generate a coverage report
-after_script:
-  - ./node_modules/.bin/istanbul cover grunt -- -u tdd
-  - ./node_modules/.bin/istanbul report cobertura --dir  shippable/codecoverage/
-after_failure:
-  - node node_modules/slack-shippable/index.js
-
-after_success:
-  - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f /tmp/ssh/00_sub > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku  
-  - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app shippable-heroku-1001
-  - git push -f heroku master
-  - node node_modules/slack-shippable/index.js -s
+build:
+  ci:
+    - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+    - source ~/.nvm/nvm.sh && nvm install 0.12
+    - node --version
+    - npm install
+    - mkdir -p shippable/testresults
+    - mkdir -p shippable/codecoverage
+    - grunt
+  # Tell istanbul to generate a coverage report
+  post_ci:
+    - ./node_modules/.bin/istanbul cover grunt -- -u tdd
+    - ./node_modules/.bin/istanbul report cobertura --dir  shippable/codecoverage/
+# on_failure:
+#   - node node_modules/slack-shippable/index.js
+  on_success:
+    - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f /tmp/ssh/00_sub > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku  
+    - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app shippable-heroku-1001
+    - git push -f heroku master
+#   - node node_modules/slack-shippable/index.js -s
