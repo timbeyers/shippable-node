@@ -8,7 +8,7 @@ describe("Index", function () {
     superagent.get("http://localhost:3000/")
       .end(function (e, res) {
         (e === null).should.equal(true);
-        res.text.should.equal("Hey buddy, this is CI/CD from shippable to Heroku - Test01!");
+        res.text.should.equal("Hello, this is CI/CD from shippable to Heroku!");
         done();
       });
   });
